@@ -9,12 +9,12 @@ const routes = [
       {
         path: '',
         name: 'Books',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/ListBooks.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Books.vue'),
       },
       {
         path: '/authors',
         name: 'Authors',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/ListAuthors.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Authors.vue'),
       },
     ],
   },
