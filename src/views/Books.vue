@@ -1,30 +1,18 @@
 <template>
   <v-container>
     <h1> list Book</h1>
-    <!--   handle show books   -->
-    <section class="d-flex align-center justify-end">
+    <!--  Add new book   -->
+    <section class="d-flex align-center justify-end my-4">
       <v-btn @click="openAddBookModal" color="primary">Add Book</v-btn>
     </section>
-    <div>
+    <!--   handle show books   -->
+    <section class="min-vh-75">
       <books-card v-for="book in getListBooks" :key="book.id" :book-data="book"></books-card>
-    </div>
+    </section>
+    <!-- handle pagination   -->
     <app-pagination :length="getListBooks.length" @change="handlePage"/>
-    <div class="text-center">
-      <v-dialog
-        v-model="dialog"
-        width="auto"
-      >
-        <v-card>
-          <v-card-text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
-          </v-card-text>
-          <v-card-actions>
-            <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </div>
+    <!-- handle modal add new book -->
+    <modal-add-book v-model="dialog"/>
   </v-container>
 </template>
 
@@ -32,6 +20,7 @@
 import {ref} from "vue";
 import BooksCard from "@/components/books/TheCard.vue"
 import AppPagination from "@/components/app/ThePagination.vue"
+import ModalAddBook from "@/components/books/modal/addBook.vue"
 import {useAppStore} from "@/store/app"
 
 
@@ -49,3 +38,8 @@ function openAddBookModal() {
 
 //
 </script>
+<style>
+.min-vh-75{
+  min-height: 75vh;
+}
+</style>
