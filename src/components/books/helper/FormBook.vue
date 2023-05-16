@@ -19,11 +19,14 @@
       ></v-text-field>
     </template>
 
-    <v-btn type="submit" block class="mt-2">Submit</v-btn>
+    <section class="d-flex align-center justify-center">
+      <v-btn type="submit" class="mt-2">Submit</v-btn>
+      <v-btn @click="closeDialog" type="button" class="mt-2 ml-4 bg-red-accent-2">cancel</v-btn>
+    </section>
   </v-form>
 </template>
 <script setup>
-import {computed, reactive} from "vue";
+import {computed, onMounted, onUpdated, reactive, watch} from "vue";
 import {useBookStore} from "@/store/books"
 
 const props = defineProps({
@@ -31,6 +34,11 @@ const props = defineProps({
     type: Boolean,
     required: true,
     default: false
+  },
+  id: {
+    type: Number,
+    required: false,
+    default: 0
   }
 })
 const emit = defineEmits(["update:modelValue",])
@@ -54,6 +62,12 @@ let fields = computed(() => Object.keys(bookData).filter((key) => key !== 'id'))
 
 const {addBooks} = useBookStore()
 
+const {getListBooks, editBook} = useBookStore()
+
+function closeDialog() {
+  emit("update:modelValue", false)
+}
+
 // upload file
 // conver to base 64
 const toBase64 = file => new Promise((resolve, reject) => {
@@ -75,14 +89,29 @@ function generateRandomId() {
 async function onSubmit(payload) {
   let response = await payload
   if (response.valid) {
-    bookData.id = generateRandomId()
-    let isAdded = await addBooks(bookData)
-    if (isAdded) {
+    let isSuccess
+    if (props.id) {
+      isSuccess = editBook(payload)
+    } else {
+      bookData.id = generateRandomId()
+      isSuccess = await addBooks(bookData)
+    }
+
+    if (isSuccess) {
       emit("update:modelValue", false)
     } else {
       emit("update:modelValue", true)
     }
   }
-
 }
+
+function findBook() {
+  return getListBooks.find((book) => book.id === props.id)
+}
+
+onMounted(() => {
+  if (props.id) {
+    bookData = findBook()
+  }
+})
 </script>
