@@ -27,9 +27,10 @@
   </div>
 </template>
 <script setup>
+import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {useBookStore} from "@/store/books";
-import {onMounted, ref} from "vue";
+
 
 const route = useRoute()
 const router = useRouter()
