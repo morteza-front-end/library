@@ -4,7 +4,7 @@
       <v-btn @click="remove">
         <v-icon class="text-red-accent-2" icon="mdi-delete"></v-icon>
       </v-btn>
-      <v-btn class="mx-2">
+      <v-btn @click="edit" class="mx-2">
         <v-icon class="text-blue-accent-2" icon="mdi-pencil"></v-icon>
       </v-btn>
     </section>
@@ -24,19 +24,21 @@
         <v-img :src="targetBook.coverImage" width="300px" class="max-h-200" :alt="targetBook.name"></v-img>
       </div>
     </v-row>
+    <DialogAddBook v-model="isShowDialog" :id="id" />
   </div>
 </template>
 <script setup>
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {useBookStore} from "@/store/books";
-
+import DialogAddBook from "@/components/books/modal/detailBook.vue"
 
 const route = useRoute()
 const router = useRouter()
 const id = +(route.params.id)
 const {getListBooks, removeBook} = useBookStore()
 let targetBook = ref({})
+const isShowDialog = ref(false)
 
 function getBook() {
   targetBook.value = getListBooks.find((book) => book.id === id)
@@ -49,9 +51,9 @@ async function remove() {
   }
 }
 
-// async function edit(){
-//   await
-// }
+async function edit(){
+  isShowDialog.value = true
+}
 
 onMounted(() => getBook())
 </script>
