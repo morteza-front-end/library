@@ -1,7 +1,9 @@
 <template>
-  <v-card width="300px">
-    <v-img :src="props.bookData.coverImage" :alt="props.bookData.name"></v-img>
-    <v-card-title>{{ props.bookData.name }}</v-card-title>
+  <v-card width="300px" @click="navigateTo">
+    <v-img :src="props.bookData.coverImage" width="300px" class="max-h-200" :alt="props.bookData.name"></v-img>
+    <div class="d-flex align-center ">
+      <v-card-title class="pe-0">{{ props.bookData.name }}</v-card-title>
+    </div>
     <v-card-text>
       <v-list>
         <v-list-item>
@@ -21,10 +23,11 @@
   </v-card>
 </template>
 <script setup>
-
+import {useRouter} from "vue-router";
 
 const props = defineProps({
   bookData: {
+    id: 1,
     name: '',
     author: '',
     coverImage: '',
@@ -32,4 +35,16 @@ const props = defineProps({
     pageNumber: ''
   }
 })
+const router = useRouter()
+
+function navigateTo() {
+  if (!props.bookData.id) return
+  let path = `/books/${props.bookData.id}`
+  router.push(path)
+}
 </script>
+<style>
+.max-h-200{
+  max-height: 200px;
+}
+</style>
