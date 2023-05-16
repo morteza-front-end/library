@@ -4,8 +4,10 @@
       v-model="isOpenDialog"
       @change="update"
       width="35rem"
+      persistent
       content-class="bg-white py-4 px-2 rounded "
     >
+      <v-card-title> Add book</v-card-title>
       <div class="w-100 bg-light-subtle">
         <form-book v-model="isOpenDialog"/>
       </div>
@@ -30,6 +32,7 @@ const isOpenDialog = ref(false)
 watch(() => props.modelValue, (value, oldValue) => {
   if (value !== oldValue) {
     isOpenDialog.value = value
+    emit("update:modelValue", value)
   }
 })
 
