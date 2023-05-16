@@ -9,26 +9,36 @@
     >
       <v-card-title> Add book</v-card-title>
       <div class="w-100 bg-light-subtle">
-        <form-book v-model="isOpenDialog"/>
+        <form-book v-model="isOpenDialog" :id="props.id"/>
       </div>
 
     </v-dialog>
   </div>
 </template>
 <script setup>
-import {ref, watch} from "vue";
+import { ref, watch} from "vue";
 import FormBook from "@/components/books/helper/FormBook.vue";
-
 const props = defineProps({
   modelValue: {
     type: Boolean,
     required: true,
     default: false
+  },
+  id:{
+    type: Number,
+    required: false,
+    default: 0
   }
 })
 const emit = defineEmits(["update:modelValue"])
 
 const isOpenDialog = ref(false)
+watch(()=>isOpenDialog.value,(value,oldValue)=>{
+  if (value !== oldValue) {
+    emit("update:modelValue", value)
+  }
+})
+
 watch(() => props.modelValue, (value, oldValue) => {
   if (value !== oldValue) {
     isOpenDialog.value = value
