@@ -16,7 +16,7 @@
     <!-- handle pagination   -->
     <app-pagination v-if="allPage!==0" :length="allPage" @change="handlePage"/>
     <!-- handle modal add new book -->
-    <modal-add-book v-model="dialog"/>
+    <modal-detail-book v-model="dialog"/>
   </v-container>
 </template>
 
@@ -24,7 +24,7 @@
 import {computed, ref} from "vue";
 import BooksCard from "@/components/books/TheCard.vue"
 import AppPagination from "@/components/app/ThePagination.vue"
-import ModalAddBook from "@/components/books/modal/addBook.vue"
+import ModalDetailBook from "@/components/books/modal/detailBook.vue"
 import {useBookStore} from "@/store/books"
 
 
