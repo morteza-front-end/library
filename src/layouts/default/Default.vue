@@ -1,11 +1,15 @@
 <template>
-  <v-app>
-
-    <default-view />
+  <v-app class="bg-gray">
+    <app-bar></app-bar>
+    <router-view/>
   </v-app>
 </template>
 
 <script setup>
-  import DefaultBar from './AppBar.vue'
-  import DefaultView from './View.vue'
+import AppBar from './AppBar.vue'
 </script>
+<style>
+.bg-gray{
+  background-color: #ccc;
+}
+</style>
