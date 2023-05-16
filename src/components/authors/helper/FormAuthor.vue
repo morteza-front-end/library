@@ -63,7 +63,7 @@ function closeDialog() {
 }
 
 // upload file
-// conver to base 64
+// convert to base 64
 const toBase64 = file => new Promise((resolve, reject) => {
   const reader = new FileReader();
   reader.readAsDataURL(file);
