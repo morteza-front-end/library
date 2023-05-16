@@ -9,7 +9,7 @@
       </v-btn>
     </section>
     <v-row justify="center">
-      <div class="text-h5">
+      <div class="text-h5 mr-2">
         <p>name: {{ targetBook.fullName }}</p>
       </div>
       <div>
