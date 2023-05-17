@@ -1,6 +1,18 @@
 <template>
   <v-container>
     <h1> list Book</h1>
+    <!-- search section for book   -->
+    <section class="d-flex align-center justify-end my-4">
+      <v-text-field v-model="search" label="Search" outlined dense></v-text-field>
+      <!-- a select box for choose     -->
+      <v-select
+        :items="['name', 'author', 'category']"
+        v-model="searchBy"
+        label="Search By"
+        outlined
+        dense
+      ></v-select>
+    </section>
     <!--  Add new book   -->
     <section class="d-flex align-center justify-end my-4">
       <v-btn @click="openAddBookModal" color="primary">Add Book</v-btn>
@@ -31,24 +43,27 @@ import {useBookStore} from "@/store/books"
 const {getListBooks, allBook} = useBookStore()
 const endIndex = ref(2)
 const startIndex = ref(0)
-const list = computed(() => getListBooks(startIndex.value, startIndex.value + endIndex.value))
+
+let list = getListBooks(startIndex.value, startIndex.value + endIndex.value)
+
 const dialog = ref(false)
 const page = ref(1)
 const allPage = computed(() => Math.ceil(allBook.length / endIndex.value))
 
 watch(() => page.value, (value, oldValue) => {
-  console.log("new value",value)
-  console.log("old value",oldValue)
+  //  pagination for show books
+  console.log("new value", value)
+  console.log("old value", oldValue)
   if (oldValue > value) {
     console.log(" startIndex.value Before=>", startIndex.value)
-    startIndex.value = startIndex.value - (oldValue)*endIndex.value
+    startIndex.value = startIndex.value - (oldValue) * endIndex.value
     console.log(" startIndex.value=>", startIndex.value)
   }
-  if(value - oldValue>1){
-    startIndex.value = startIndex.value + (value-oldValue)
+  if (value - oldValue > 1) {
+    startIndex.value = startIndex.value + (value - oldValue)
   }
-  if(oldValue-value>1){
-    startIndex.value = startIndex.value + (oldValue-value)
+  if (oldValue - value > 1) {
+    startIndex.value = startIndex.value + (oldValue - value)
   }
 })
 
@@ -61,6 +76,25 @@ function openAddBookModal() {
   dialog.value = true
 }
 
+// search in list book
+let search = ref("")
+let searchBy = ref("name")
+watch(() => search.value, () => {
+  searchBook()
+})
+
+function searchBook() {
+  list = allBook.filter((book) => {
+    if (searchBy.value === "name") {
+      return book.name.toLowerCase().includes(search.value.toLowerCase())
+    }
+    if (searchBy.value === "author") {
+      return book.author.toLowerCase().includes(search.value.toLowerCase())
+    } else {
+      return book.category.toLowerCase().includes(search.value.toLowerCase())
+    }
+  })
+}
 </script>
 <style>
 .min-vh-75 {
