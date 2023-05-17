@@ -85,6 +85,17 @@ export const useBookStore = defineStore('books', {
           reject(e)
         }
       })
+    },
+    getWrittenBooks(value) {
+      return new Promise((resolve, reject) => {
+        try {
+          const writtenBooks = this.listBooks.filter((book) => book.author === value)
+          resolve(writtenBooks)
+        } catch (e) {
+          console.log("error in add books", e)
+          reject(e)
+        }
+      })
     }
   }
 })
