@@ -19,7 +19,7 @@
     <!-- show author written books    -->
     <h1>author written books:</h1>
     <v-row justify="center">
-      <v-col cols="12" md="6" lg="4" v-for="(book,index) in listBooks" :key="book.id">
+      <v-col cols="12" md="6" lg="4" v-for="book in listBooks" :key="book.id">
         <book-card v-if="book" :book-data="book"/>
       </v-col>
     </v-row>
