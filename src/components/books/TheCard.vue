@@ -44,7 +44,7 @@ function navigateTo() {
 }
 </script>
 <style>
-.max-h-200{
+.max-h-200 {
   max-height: 200px;
 }
 </style>
