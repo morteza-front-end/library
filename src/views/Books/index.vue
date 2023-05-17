@@ -6,7 +6,7 @@
       <v-text-field v-model="search" label="Search" outlined dense></v-text-field>
       <!-- a select box for choose     -->
       <v-select
-        :items="['name', 'author', 'category']"
+        :items="['name', 'author', 'ISBN']"
         v-model="searchBy"
         label="Search By"
         outlined
@@ -91,7 +91,7 @@ function searchBook() {
     if (searchBy.value === "author") {
       return book.author.toLowerCase().includes(search.value.toLowerCase())
     } else {
-      return book.category.toLowerCase().includes(search.value.toLowerCase())
+      return book.isbn.toLowerCase().includes(search.value.toLowerCase())
     }
   })
 }
